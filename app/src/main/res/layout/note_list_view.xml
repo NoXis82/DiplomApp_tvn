@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal"
+    android:layout_margin="6dp"
+    android:background="@color/colorBackground"
+    android:padding="8dp">
+
+    <LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorText"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            tools:text="Title Example" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="@color/colorText"
+            android:textStyle="normal"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:textSize="15sp"
+            tools:text="Subtitle Example" />
+
+
+        <TextView
+            android:id="@+id/deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:textColor="@color/colorText"
+            android:textSize="15sp"
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            android:gravity="end"
+            tools:text="Deadline" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

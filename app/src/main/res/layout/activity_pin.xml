@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".PinActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/ic_user_circle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/pin_textview"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/pin_textview"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintBottom_toTopOf="@+id/view_round"
+        android:textColor="@color/colorText"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="@string/text_input_pin"/>
+
+    <LinearLayout
+        android:id="@+id/view_round"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/pin_textview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginTop="16dp">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:weightSum="4"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/digit_pin_view_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="25dp"
+            android:background="@drawable/pin_code_round_empty" />
+
+        <ImageView
+            android:id="@+id/digit_pin_view_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="25dp"
+            android:background="@drawable/pin_code_round_empty" />
+
+        <ImageView
+            android:id="@+id/digit_pin_view_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="25dp"
+            android:background="@drawable/pin_code_round_empty" />
+
+        <ImageView
+            android:id="@+id/digit_pin_view_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/pin_code_round_empty" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:weightSum="3"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/digitBtn_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="28dp"
+            android:background="@drawable/button_digital_pin"
+            android:textColor="@color/colorText"
+            android:textSize="30sp"
+
+            android:text="@string/btn_1"/>
+
+        <Button
+            android:id="@+id/digitBtn_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="28dp"
+            android:background="@drawable/button_digital_pin"
+            android:textColor="@color/colorText"
+            android:textSize="30sp"
+            android:text="@string/btn_2"/>
+
+        <Button
+            android:id="@+id/digitBtn_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_digital_pin"
+            android:layout_marginHorizontal="28dp"
+            android:textColor="@color/colorText"
+            android:textSize="30sp"
+            android:text="@string/btn_3"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/digitBtn_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="28dp"
+                android:background="@drawable/button_digital_pin"
+                android:textColor="@color/colorText"
+                android:textSize="30sp"
+                android:text="@string/btn_4"/>
+
+            <Button
+                android:id="@+id/digitBtn_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="28dp"
+                android:background="@drawable/button_digital_pin"
+                android:textColor="@color/colorText"
+                android:textSize="30sp"
+                android:text="@string/btn_5"/>
+
+            <Button
+                android:id="@+id/digitBtn_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_digital_pin"
+                android:layout_marginHorizontal="28dp"
+                android:textColor="@color/colorText"
+                android:textSize="30sp"
+                android:text="@string/btn_6"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/digitBtn_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="28dp"
+                android:background="@drawable/button_digital_pin"
+                android:textColor="@color/colorText"
+                android:textSize="30sp"
+                android:text="@string/btn_7"/>
+
+            <Button
+                android:id="@+id/digitBtn_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="28dp"
+                android:background="@drawable/button_digital_pin"
+                android:textColor="@color/colorText"
+                android:textSize="30sp"
+                android:text="@string/btn_8"/>
+
+            <Button
+                android:id="@+id/digitBtn_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_digital_pin"
+                android:layout_marginHorizontal="28dp"
+                android:textColor="@color/colorText"
+                android:textSize="30sp"
+                android:text="@string/btn_9"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28dp"
+                android:layout_weight="1"
+                android:background="@color/colorBackground"
+                android:clickable="false"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/digitBtn_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="28dp"
+                android:background="@drawable/button_digital_pin"
+                android:textColor="@color/colorText"
+                android:textSize="30sp"
+                android:text="@string/btn_0"/>
+
+            <Button
+                android:id="@+id/btn_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_digital_pin"
+                android:layout_marginHorizontal="28dp"
+                android:textColor="@color/colorText"
+                android:textSize="30sp"
+                android:text="@string/btn_del"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

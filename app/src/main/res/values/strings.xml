@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">DiplomApp</string>
+    <string name="textSettings">Введите новый pin:</string>
+    <string name="btnSavePin">Сохранить</string>
+    <string name="enter_pin_empty">Заполните поле</string>
+    <string name="enter_pin_short">Ваш пин-код менее 4-х цифр</string>
+    <string name="enter_pin_save">Ваш пин-код сохранен</string>
+    <string name="text_input_pin">Введите 4-х значный код</string>
+    <string name="btn_1">1</string>
+    <string name="btn_2">2</string>
+    <string name="btn_3">3</string>
+    <string name="btn_4">4</string>
+    <string name="btn_5">5</string>
+    <string name="btn_6">6</string>
+    <string name="btn_7">7</string>
+    <string name="btn_8">8</string>
+    <string name="btn_9">9</string>
+    <string name="btn_0">0</string>
+    <string name="btn_del">del</string>
+    <string name="pin_error">Код указан не верно</string>
+    <string name="pin_correct">Урра!!!</string>
+    <string name="setting_hint">Настройки</string>
+    <string name="title_hint">Заголовок</string>
+    <string name="note_body">Тело заметки</string>
+    <string name="deadline_hint">Установить срок</string>
+    <string name="edit_deadline_hint">Срок выполнения</string>
+    <string name="dialog_warning">Внимание!</string>
+    <string name="dialog_message">Вы уверены, что хотите удалить заметку?</string>
+    <string name="dialog_delete">Удалить</string>
+    <string name="dialog_cancel">Отменить</string>
+
+</resources>
