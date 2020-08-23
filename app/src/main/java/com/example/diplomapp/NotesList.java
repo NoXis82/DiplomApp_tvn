@@ -52,8 +52,15 @@ public class NotesList extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String str = "Position: " + position + "/" + "id: " + id;
-                Toast.makeText(view.getContext(), str, Toast.LENGTH_SHORT).show();
+                String idNote = notes.get(position).getId();
+                NoteData readNote = App.getNoteRepository().getNoteById(idNote);
+                Intent intent = new Intent(getApplicationContext(), CreateNote.class);
+                intent.putExtra("id", readNote.getId());
+                intent.putExtra("title", readNote.getTitle());
+                intent.putExtra("subtitle", readNote.getSubtitle());
+                intent.putExtra("deadline", readNote.getDeadline());
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -80,7 +87,6 @@ public class NotesList extends AppCompatActivity {
                         noteDataAdapter.notifyDataSetChanged();
                     }
                 });
-
                 builder.setNegativeButton(R.string.dialog_cancel,
                         new DialogInterface.OnClickListener() {
                     @Override

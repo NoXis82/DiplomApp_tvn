@@ -2,17 +2,20 @@ package com.example.diplomapp;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +36,11 @@ public class FileNoteRepository implements NoteRepository {
 
     @Override
     public NoteData getNoteById(String id) {
+           for(NoteData readNote: readNotes) {
+            if(readNote.getId().equals(id)) {
+                return readNote;
+            }
+        }
         return null;
     }
 
@@ -105,7 +113,12 @@ public class FileNoteRepository implements NoteRepository {
 
     @Override
     public void deleteById(String id) {
-        Toast.makeText(mContext, id, Toast.LENGTH_SHORT).show();
+        String fileName = id + ".json";
+        listFileNotes.remove(fileName);
+        SharedPreferences.Editor e = listFiles.edit();
+        e.putStringSet(KEY_NAME_FILES, listFileNotes);
+        e.apply();
+        mContext.deleteFile(fileName);
     }
 }
 

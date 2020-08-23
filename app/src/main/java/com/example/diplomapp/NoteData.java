@@ -33,6 +33,7 @@ public class NoteData {
     @Override
     public String toString() {
         return "NoteData{" +
+                "id='" + id + '\'' +
                 "title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", deadline='" + deadline + '\'' +

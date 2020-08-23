@@ -72,7 +72,12 @@ public class CreateNote extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                editTextTimeParam = hourOfDay + ":" + minute;
+
+                                if(minute < 10 ) {
+                                    editTextTimeParam = hourOfDay + ":" + 0 + minute;
+                                } else {
+                                    editTextTimeParam = hourOfDay + ":" + minute;
+                                }
                                 editTextParam = editTextDateParam + " " + editTextTimeParam;
                                 dateSetting.setText(editTextParam);
                             }
