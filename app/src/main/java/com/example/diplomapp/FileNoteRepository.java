@@ -14,8 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,13 +23,15 @@ public class FileNoteRepository implements NoteRepository {
 
     private static final String LIST_FILES = "filesnotes";
     private static final String KEY_NAME_FILES = "id";
-    private SharedPreferences listFiles;
     private Context mContext;
+    private SharedPreferences listFiles;
     private List<NoteData> readNotes;
     private Set<String> listFileNotes;
+
+
     public FileNoteRepository(Application app) {
         mContext = app.getApplicationContext();
-        listFiles = mContext.getSharedPreferences(LIST_FILES, Context.MODE_PRIVATE);
+        listFiles = app.getSharedPreferences(LIST_FILES, Context.MODE_PRIVATE);
     }
 
 
@@ -50,6 +51,7 @@ public class FileNoteRepository implements NoteRepository {
         InputStreamReader streamReader = null;
         FileInputStream fileInputStream = null;
         readNotes = new ArrayList<>();
+        listFileNotes = new HashSet<>();
         try {
             Set<String> ret = listFiles.getStringSet(KEY_NAME_FILES, new HashSet<String>());
             for (String fileName : ret) {
@@ -58,9 +60,6 @@ public class FileNoteRepository implements NoteRepository {
                 Gson gson = new Gson();
                 NoteData readNote = gson.fromJson(streamReader, NoteData.class);
                 readNotes.add(readNote);
-                if(listFileNotes == null) {
-                    listFileNotes = new HashSet<>();
-                }
                 listFileNotes.add(fileName);
             }
             return readNotes;
@@ -89,27 +88,32 @@ public class FileNoteRepository implements NoteRepository {
     public void saveNote(NoteData note) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(note);
+        Toast.makeText(mContext, jsonString, Toast.LENGTH_LONG).show();
         FileOutputStream fileOutputStream = null;
         try {
             String fileName = note.getId() + ".json";
-            listFileNotes.add(fileName);
-            SharedPreferences.Editor e = listFiles.edit();
-            e.putStringSet(KEY_NAME_FILES, listFileNotes);
-            e.apply();
+            if (listFileNotes.contains(fileName)) {
+               mContext.deleteFile(fileName);
+            } else {
+              listFileNotes.add(fileName);
+                SharedPreferences.Editor e = listFiles.edit();
+                e.putStringSet(KEY_NAME_FILES, listFileNotes);
+                e.apply();
+            }
             fileOutputStream = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
             fileOutputStream.write(jsonString.getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
+        } catch(Exception e){
+                e.printStackTrace();
+            } finally{
+                if (fileOutputStream != null) {
+                    try {
+                        fileOutputStream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                   }
                 }
             }
         }
-    }
 
     @Override
     public void deleteById(String id) {

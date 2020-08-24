@@ -5,11 +5,13 @@ public class NoteData {
     private String subtitle;
     private String deadline;
     private String id;
+    private String checkDeadline;
 
-    public NoteData (String id, String title, String subtitle, String deadline) {
+    public NoteData (String id, String title, String subtitle, String checkDeadline, String deadline) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
+        this.checkDeadline = checkDeadline;
         this.deadline = deadline;
 
     }
@@ -23,6 +25,10 @@ public class NoteData {
 
     public String getSubtitle() {
         return subtitle;
+    }
+
+    public String getCheckDeadline() {
+        return checkDeadline;
     }
 
     public String getDeadline() {

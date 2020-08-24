@@ -58,6 +58,7 @@ public class NotesList extends AppCompatActivity {
                 intent.putExtra("id", readNote.getId());
                 intent.putExtra("title", readNote.getTitle());
                 intent.putExtra("subtitle", readNote.getSubtitle());
+                intent.putExtra("checkDeadline", readNote.getCheckDeadline());
                 intent.putExtra("deadline", readNote.getDeadline());
                 startActivity(intent);
                 finish();

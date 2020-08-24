@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.io.InputStreamReader;
 import java.util.Calendar;
 
 public class CreateNote extends AppCompatActivity {
@@ -37,6 +38,7 @@ public class CreateNote extends AppCompatActivity {
     private String editTextDateParam;
     private String editTextTimeParam;
     private Calendar todayCalendar;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,7 @@ public class CreateNote extends AppCompatActivity {
         initView();
         trackCheckDate();
         showDialogSetDate();
-
+        checkIntentExtra();
     }
 
     private void initView() {
@@ -59,11 +61,24 @@ public class CreateNote extends AppCompatActivity {
         setSupportActionBar(myToolbarNote);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
     }
+
+    private void checkIntentExtra() {
+        intent = getIntent();
+        if (intent.getExtras() != null) {
+            titleEdit.setText(intent.getStringExtra("title"));
+            bodyNote.setText(intent.getStringExtra("subtitle"));
+            checkDeadline.setChecked(intent.getBooleanExtra("checkDeadline",
+                    true));
+            dateSetting.setText(intent.getStringExtra("deadline"));
+        }
+    }
+
+
 
     private void showDialogSetDate() {
         calendarViewBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 todayCalendar = Calendar.getInstance();
@@ -124,17 +139,28 @@ public class CreateNote extends AppCompatActivity {
         if(item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(getApplicationContext(), NotesList.class);
             startActivity(intent);
-            this.finish();
+            finish();
         }
         if (item.getItemId() == R.id.action_save) {
-            GenerateSalt generateId = new GenerateSalt();
-            App.getNoteRepository().saveNote(
-                    new NoteData(generateId.randomGenerate(), titleEdit.getText().toString(),
-                            bodyNote.getText().toString(),
-                            editTextParam));
+            NoteData noteSave;
+            if(intent.getStringExtra("id") != null) {
+                noteSave = new NoteData(intent.getStringExtra("id"),
+                        titleEdit.getText().toString(),
+                        bodyNote.getText().toString(),
+                        String.valueOf(checkDeadline.isChecked()),
+                        editTextParam);
+            } else {
+                GenerateSalt generateId = new GenerateSalt();
+                noteSave = new NoteData(generateId.randomGenerate(),
+                        titleEdit.getText().toString(),
+                        bodyNote.getText().toString(),
+                        String.valueOf(checkDeadline.isChecked()),
+                        editTextParam);
+            }
+            App.getNoteRepository().saveNote(noteSave);
             Intent intent = new Intent(getApplicationContext(), NotesList.class);
             startActivity(intent);
-            this.finish();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
