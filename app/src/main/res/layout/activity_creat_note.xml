@@ -75,6 +75,7 @@
             android:backgroundTint="@color/colorStroke"
             android:textColorHint="@color/text_hint"
             android:textSize="18sp"
+            android:inputType="datetime"
             android:textColor="@color/colorText"
             android:layout_weight="1"
             android:hint="@string/edit_deadline_hint"/>

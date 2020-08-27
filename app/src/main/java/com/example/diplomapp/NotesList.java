@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class NotesList extends AppCompatActivity {
@@ -60,6 +62,19 @@ public class NotesList extends AppCompatActivity {
                 intent.putExtra("subtitle", readNote.getSubtitle());
                 intent.putExtra("checkDeadline", readNote.getCheckDeadline());
                 intent.putExtra("deadline", readNote.getDeadline());
+
+
+                String fileName = readNote.getId() + ".json";
+                Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
+                File file = new File(fileName);
+                if (file.exists()) {
+                    //Date date = new Date(file.lastModified());
+                    Toast.makeText(getApplicationContext(), "String.valueOf(date)", Toast.LENGTH_LONG).show();
+                }
+
+
+
+
                 startActivity(intent);
                 finish();
             }

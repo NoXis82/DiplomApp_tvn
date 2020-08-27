@@ -23,7 +23,7 @@
     <string name="title_hint">Заголовок</string>
     <string name="note_body">Тело заметки</string>
     <string name="deadline_hint">Установить срок</string>
-    <string name="edit_deadline_hint">Срок выполнения</string>
+    <string name="edit_deadline_hint">дд/мм/гггг чч:мм</string>
     <string name="dialog_warning">Внимание!</string>
     <string name="dialog_message">Вы уверены, что хотите удалить заметку?</string>
     <string name="dialog_delete">Удалить</string>

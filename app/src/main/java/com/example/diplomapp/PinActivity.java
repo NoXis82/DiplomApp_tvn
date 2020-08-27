@@ -47,11 +47,10 @@ public class PinActivity extends AppCompatActivity {
         mButtons.add((Button) findViewById(R.id.digitBtn_9));
         mButtons.add((Button) findViewById(R.id.digitBtn_0));
         mButtons.add((Button) findViewById(R.id.btn_delete));
-
     }
 
     public void clickKeyboardButton() {
-        for (View button: mButtons) {
+        for (View button : mButtons) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,7 +82,7 @@ public class PinActivity extends AppCompatActivity {
                             countPin(KeyboardButtonEnum.BUTTON_7.getButtonValue());
                             break;
                         case R.id.digitBtn_8:
-                           countPin(KeyboardButtonEnum.BUTTON_8.getButtonValue());
+                            countPin(KeyboardButtonEnum.BUTTON_8.getButtonValue());
                             break;
                         case R.id.digitBtn_9:
                             countPin(KeyboardButtonEnum.BUTTON_9.getButtonValue());
@@ -91,8 +90,8 @@ public class PinActivity extends AppCompatActivity {
                         case R.id.btn_delete:
                             countPin(KeyboardButtonEnum.BUTTON_DEL.getButtonValue());
                             break;
-                 }
-               }
+                    }
+                }
             });
         }
     }
@@ -104,24 +103,24 @@ public class PinActivity extends AppCompatActivity {
                 pinLength++;
                 pinEnter.append(buttonValue);
                 if (pinLength == 4) {
-                      if(App.getPasswordStorage().checkPin(pinEnter.toString())) {
-                          pinTextView.setText(R.string.pin_correct);
-                          Intent intent = new Intent(getApplicationContext(), NotesList.class);
-                          startActivity(intent);
-                          finish();
-                      } else {
-                          pinTextView.setText(R.string.pin_error);
-                          pinLength = 0;
-                          pinEnter.setLength(0);
-                          for(ImageView pin :mViewPin) {
-                              pin.setBackgroundResource(R.drawable.pin_code_round_empty);
-                          }
-                      }
+                    if (App.getPasswordStorage().checkPin(pinEnter.toString())) {
+                        pinTextView.setText(R.string.pin_correct);
+                        Intent intent = new Intent(getApplicationContext(), NotesList.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        pinTextView.setText(R.string.pin_error);
+                        pinLength = 0;
+                        pinEnter.setLength(0);
+                        for (ImageView pin : mViewPin) {
+                            pin.setBackgroundResource(R.drawable.pin_code_round_empty);
+                        }
+                    }
                 }
             }
         } else if (pinLength > 0) {
             mViewPin.get(pinLength - 1).setBackgroundResource(R.drawable.pin_code_round_empty);
-            pinEnter.deleteCharAt(pinLength-1);
+            pinEnter.deleteCharAt(pinLength - 1);
             pinLength--;
         }
     }

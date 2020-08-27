@@ -6,13 +6,20 @@ public class NoteData {
     private String deadline;
     private String id;
     private String checkDeadline;
+    private String lastChangeFile;
 
-    public NoteData (String id, String title, String subtitle, String checkDeadline, String deadline) {
+    public NoteData (String id,
+                     String title,
+                     String subtitle,
+                     String checkDeadline,
+                     String deadline,
+                     String lastChangeFile) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
         this.checkDeadline = checkDeadline;
         this.deadline = deadline;
+        this.lastChangeFile = lastChangeFile;
 
     }
     public String getId() {
@@ -35,15 +42,21 @@ public class NoteData {
         return deadline;
     }
 
+    public String getLastChangeFile() {
+        return lastChangeFile;
+    }
 
     @Override
     public String toString() {
         return "NoteData{" +
-                "id='" + id + '\'' +
                 "title='" + title + '\'' +
                 ", subtitle='" + subtitle + '\'' +
                 ", deadline='" + deadline + '\'' +
+                ", id='" + id + '\'' +
+                ", checkDeadline='" + checkDeadline + '\'' +
+                ", lastChangeFile='" + lastChangeFile + '\'' +
                 '}';
     }
+
 }
 

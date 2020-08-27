@@ -9,13 +9,13 @@ public class SimpleKeystore implements Keystore {
     private static final String APP_KEY = "keystore";
     private static final String SALT = "salt";
     private static final String HASH = "hash";
-    private SharedPreferences  mSettings;
+    private SharedPreferences mSettings;
     private HashingPin hashingPin = new HashingPin();
     private String salt;
     private String hashPin;
 
     public SimpleKeystore(Application app) {
-         mSettings =  app.getSharedPreferences(APP_KEY, Context.MODE_PRIVATE);
+        mSettings = app.getSharedPreferences(APP_KEY, Context.MODE_PRIVATE);
     }
 
 
@@ -26,9 +26,9 @@ public class SimpleKeystore implements Keystore {
 
     @Override
     public boolean checkPin(String pin) {
-        salt = mSettings.getString(SALT,"");
+        salt = mSettings.getString(SALT, "");
         String inputHashPin = pin + salt;
-        hashPin = mSettings.getString(HASH,"");
+        hashPin = mSettings.getString(HASH, "");
         inputHashPin = hashingPin.hashingPin(inputHashPin);
         return inputHashPin.equals(hashPin);
     }

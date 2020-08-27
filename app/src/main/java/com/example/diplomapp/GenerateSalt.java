@@ -9,7 +9,7 @@ public class GenerateSalt {
     public GenerateSalt() {
     }
 
-    public String randomGenerate () {
+    public String randomGenerate() {
         Random rnd = new Random();
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < 10; i++) {

@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class NoteDataAdapter extends BaseAdapter {
@@ -16,12 +17,15 @@ public class NoteDataAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
     public NoteDataAdapter(Context context, List<NoteData> notes) {
+        Comparator<NoteData> myDataComparator = new DataComparator()
+                .thenComparing(new LastChangeComparator())
+                .thenComparing(new CheckDeadlineComparator());
         if (notes == null) {
             this.notes = new ArrayList<>();
-
         } else {
             this.notes = notes;
         }
+        this.notes.sort(myDataComparator);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -54,12 +58,21 @@ public class NoteDataAdapter extends BaseAdapter {
         TextView title = view.findViewById(R.id.title);
         TextView subtitle = view.findViewById(R.id.subtitle);
         TextView deadline = view.findViewById(R.id.deadline);
-        title.setText(noteData.getTitle());
-        subtitle.setText(noteData.getSubtitle());
-        deadline.setText(noteData.getDeadline());
+        if (noteData.getTitle().equals("")) {
+            title.setVisibility(View.GONE);
+        } else {
+            title.setText(noteData.getTitle());
+        }
+        if (noteData.getSubtitle().equals("")) {
+            subtitle.setVisibility(View.GONE);
+        } else {
+            subtitle.setText(noteData.getSubtitle());
+        }
+        if (noteData.getCheckDeadline().equals("false")) {
+            deadline.setVisibility(View.GONE);
+        } else {
+            deadline.setText(noteData.getDeadline());
+        }
         return view;
-
     }
-
-
 }

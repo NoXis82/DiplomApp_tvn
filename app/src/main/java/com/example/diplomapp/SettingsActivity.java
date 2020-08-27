@@ -58,10 +58,10 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String str = enterPin.getText().toString();
-                if(str.equals("")) {
+                if (str.equals("")) {
                     errorView.setText(R.string.enter_pin_empty);
                 } else {
-                    if(str.length() < 4) {
+                    if (str.length() < 4) {
                         errorView.setText(R.string.enter_pin_short);
                     } else {
                         App.getPasswordStorage().saveNew(str);
