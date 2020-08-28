@@ -146,7 +146,6 @@ public class CreateNote extends AppCompatActivity {
                     dateLine.setVisibility(View.VISIBLE);
                 } else {
                     dateLine.setVisibility(View.GONE);
-                   // dateSetting.setText("00-00-0000 00:00");
                 }
             }
         });
