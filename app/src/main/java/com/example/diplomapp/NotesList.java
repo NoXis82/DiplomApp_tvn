@@ -62,19 +62,6 @@ public class NotesList extends AppCompatActivity {
                 intent.putExtra("subtitle", readNote.getSubtitle());
                 intent.putExtra("checkDeadline", readNote.getCheckDeadline());
                 intent.putExtra("deadline", readNote.getDeadline());
-
-
-                String fileName = readNote.getId() + ".json";
-                Toast.makeText(getApplicationContext(), fileName, Toast.LENGTH_LONG).show();
-                File file = new File(fileName);
-                if (file.exists()) {
-                    //Date date = new Date(file.lastModified());
-                    Toast.makeText(getApplicationContext(), "String.valueOf(date)", Toast.LENGTH_LONG).show();
-                }
-
-
-
-
                 startActivity(intent);
                 finish();
             }
@@ -86,7 +73,7 @@ public class NotesList extends AppCompatActivity {
 
             @Override
             public boolean onItemLongClick(AdapterView<?> parent,
-                                           View view,
+                                           final View view,
                                            final int position,
                                            long id) {
 
@@ -100,7 +87,8 @@ public class NotesList extends AppCompatActivity {
                         String idNote = notes.get(position).getId();
                         App.getNoteRepository().deleteById(idNote);
                         notes.remove(position);
-                        noteDataAdapter.notifyDataSetChanged();
+                        noteDataAdapter = new NoteDataAdapter(view.getContext(), notes);
+                        listView.setAdapter(noteDataAdapter);
                     }
                 });
                 builder.setNegativeButton(R.string.dialog_cancel,
@@ -143,6 +131,4 @@ public class NotesList extends AppCompatActivity {
             }
         });
     }
-
-
 }

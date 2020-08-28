@@ -17,9 +17,7 @@ public class NoteDataAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
     public NoteDataAdapter(Context context, List<NoteData> notes) {
-        Comparator<NoteData> myDataComparator = new DataComparator()
-                .thenComparing(new LastChangeComparator())
-                .thenComparing(new CheckDeadlineComparator());
+        Comparator<NoteData> myDataComparator = new DataComparator();
         if (notes == null) {
             this.notes = new ArrayList<>();
         } else {
@@ -61,16 +59,19 @@ public class NoteDataAdapter extends BaseAdapter {
         if (noteData.getTitle().equals("")) {
             title.setVisibility(View.GONE);
         } else {
+            title.setVisibility(View.VISIBLE);
             title.setText(noteData.getTitle());
         }
         if (noteData.getSubtitle().equals("")) {
             subtitle.setVisibility(View.GONE);
         } else {
+            subtitle.setVisibility(View.VISIBLE);
             subtitle.setText(noteData.getSubtitle());
         }
         if (noteData.getCheckDeadline().equals("false")) {
             deadline.setVisibility(View.GONE);
         } else {
+            deadline.setVisibility(View.VISIBLE);
             deadline.setText(noteData.getDeadline());
         }
         return view;

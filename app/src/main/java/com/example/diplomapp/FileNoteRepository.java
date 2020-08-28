@@ -80,7 +80,6 @@ public class FileNoteRepository implements NoteRepository {
     public void saveNote(NoteData note) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(note);
-        Toast.makeText(mContext, jsonString, Toast.LENGTH_LONG).show();
         FileOutputStream fileOutputStream = null;
         try {
             String fileName = note.getId() + ".json";

@@ -46,6 +46,9 @@ public class NoteData {
         return lastChangeFile;
     }
 
+
+
+
     @Override
     public String toString() {
         return "NoteData{" +
@@ -57,6 +60,5 @@ public class NoteData {
                 ", lastChangeFile='" + lastChangeFile + '\'' +
                 '}';
     }
-
 }
 

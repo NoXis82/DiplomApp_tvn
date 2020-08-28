@@ -69,8 +69,8 @@ public class CreateNote extends AppCompatActivity {
 
     private void setDateNow() {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH);
-        editTextParam = df.format(Calendar.getInstance().getTime());
-        lastChangeFile = editTextParam;
+        lastChangeFile = df.format(Calendar.getInstance().getTime());
+
     }
 
     private void checkIntentExtra() {
@@ -96,12 +96,11 @@ public class CreateNote extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+                                String minuteStr = String.valueOf(minute);
                                 if (minute < 10) {
-                                    editTextTimeParam = hourOfDay + ":" + 0 + minute;
-                                } else {
-                                    editTextTimeParam = hourOfDay + ":" + minute;
+                                    minuteStr = 0 + minuteStr;
                                 }
+                                editTextTimeParam = hourOfDay + ":" + minuteStr;
                                 editTextParam = editTextDateParam + " " + editTextTimeParam;
                                 dateSetting.setText(editTextParam);
                             }
@@ -114,8 +113,19 @@ public class CreateNote extends AppCompatActivity {
                         v.getContext(),
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                editTextDateParam = dayOfMonth + "-" + (month + 1) + "-" + year;
+                            public void onDateSet(DatePicker view,
+                                                  int year,
+                                                  int month,
+                                                  int dayOfMonth) {
+                                    String dayStr = String.valueOf(dayOfMonth);
+                                    String monthStr = String.valueOf(month + 1);
+                                    if (dayOfMonth < 10) {
+                                        dayStr = 0 + dayStr;
+                                    }
+                                    if (month < 10) {
+                                        monthStr = 0 + monthStr;
+                                    }
+                                    editTextDateParam = dayStr + "-" + monthStr + "-" + year;
                                 timePickerDialog.show();
                             }
                         },
@@ -132,13 +142,11 @@ public class CreateNote extends AppCompatActivity {
         checkDeadline.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 if (isChecked) {
                     dateLine.setVisibility(View.VISIBLE);
-                    dateSetting.setText(editTextParam);
                 } else {
                     dateLine.setVisibility(View.GONE);
-                    dateSetting.setText("");
+                   // dateSetting.setText("00-00-0000 00:00");
                 }
             }
         });
@@ -164,7 +172,7 @@ public class CreateNote extends AppCompatActivity {
                     titleEdit.getText().toString(),
                     bodyNote.getText().toString(),
                     String.valueOf(checkDeadline.isChecked()),
-                    editTextParam, lastChangeFile);
+                    dateSetting.getText().toString(), lastChangeFile);
             App.getNoteRepository().saveNote(noteSave);
             Intent intent = new Intent(getApplicationContext(), NotesList.class);
             startActivity(intent);
