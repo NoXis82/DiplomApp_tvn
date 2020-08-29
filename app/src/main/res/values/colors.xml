@@ -7,6 +7,8 @@
     <color name="colorStroke">#B7B2B1</color>
     <color name="colorText">#FFFFFF</color>
     <color name="text_hint">#FFC107</color>
+    <color name="today_deadline">#8E7C45</color>
+    <color name="after_deadline">#AF4664</color>
 
 
 </resources>

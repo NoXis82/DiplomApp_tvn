@@ -13,13 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class NotesList extends AppCompatActivity {
@@ -76,7 +73,6 @@ public class NotesList extends AppCompatActivity {
                                            final View view,
                                            final int position,
                                            long id) {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                 builder.setTitle(R.string.dialog_warning);
                 builder.setMessage(R.string.dialog_message);
