@@ -17,7 +17,7 @@ public class PinActivity extends AppCompatActivity {
     private List<Button> mButtons;
     private List<ImageView> mViewPin;
     private int pinLength = 0;
-    private StringBuffer pinEnter = new StringBuffer();
+    private StringBuilder pinEnter = new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

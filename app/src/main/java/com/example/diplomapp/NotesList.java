@@ -13,15 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NotesList extends AppCompatActivity {
 
     private FloatingActionButton myFabAdd;
+    private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
     private List<NoteData> notes = new ArrayList<>();
     private NoteDataAdapter noteDataAdapter;
     private ListView listView;
@@ -41,7 +45,11 @@ public class NotesList extends AppCompatActivity {
         myFabAdd = findViewById(R.id.fab_add);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        notes.addAll(App.getNoteRepository().getNotes());
+        try {
+            notes.addAll(App.getNoteRepository().getNotes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         noteDataAdapter = new NoteDataAdapter(this, notes);
         listView.setAdapter(noteDataAdapter);
     }
@@ -52,17 +60,21 @@ public class NotesList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String idNote = notes.get(position).getId();
-                NoteData readNote = App.getNoteRepository().getNoteById(idNote);
-                Intent intent = new Intent(getApplicationContext(), CreateNote.class);
-                intent.putExtra("id", readNote.getId());
-                intent.putExtra("title", readNote.getTitle());
-                intent.putExtra("subtitle", readNote.getSubtitle());
-                intent.putExtra("checkDeadline", readNote.getCheckDeadline());
-                intent.putExtra("deadline", readNote.getDeadline());
-                startActivity(intent);
-                finish();
+              writeToIntent(new Intent(getApplicationContext(), CreateNote.class),
+                        App.getNoteRepository().getNoteById(idNote));
             }
         });
+    }
+
+    private void writeToIntent(Intent intent, NoteData note) {
+        DateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
+        intent.putExtra("id", note.getId());
+        intent.putExtra("title", note.getTitle());
+        intent.putExtra("subtitle", note.getSubtitle());
+        intent.putExtra("checkDeadline", note.getCheckDeadline());
+        intent.putExtra("deadline", dateFormat.format(note.getDeadline()));
+        startActivity(intent);
+        finish();
     }
 
     private void clickLongItem() {

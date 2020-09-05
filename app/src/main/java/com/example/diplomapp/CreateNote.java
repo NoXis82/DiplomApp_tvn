@@ -20,14 +20,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
 public class CreateNote extends AppCompatActivity {
 
+    private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
     private EditText titleEdit;
     private EditText bodyNote;
     private CheckBox checkDeadline;
@@ -42,6 +45,7 @@ public class CreateNote extends AppCompatActivity {
     private Calendar todayCalendar;
     private String lastChangeFile;
     private Intent intent;
+    private DateFormat df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class CreateNote extends AppCompatActivity {
     }
 
     private void setDateNow() {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH);
+        df = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
         lastChangeFile = df.format(Calendar.getInstance().getTime());
 
     }
@@ -78,9 +82,9 @@ public class CreateNote extends AppCompatActivity {
         if (intent.getExtras() != null) {
             titleEdit.setText(intent.getStringExtra("title"));
             bodyNote.setText(intent.getStringExtra("subtitle"));
-            if (Objects.equals(intent.getStringExtra("checkDeadline"), "true")) {
+            if (intent.getBooleanExtra("checkDeadline", true)) {
                 checkDeadline.setChecked(true);
-                dateSetting.setText(intent.getStringExtra("deadline"));
+                 dateSetting.setText(intent.getStringExtra("deadline"));
             }
         }
     }
@@ -125,7 +129,7 @@ public class CreateNote extends AppCompatActivity {
                                     if (month < 10) {
                                         monthStr = 0 + monthStr;
                                     }
-                                    editTextDateParam = dayStr + "-" + monthStr + "-" + year;
+                                    editTextDateParam = dayStr + "/" + monthStr + "/" + year;
                                 timePickerDialog.show();
                             }
                         },
@@ -159,7 +163,7 @@ public class CreateNote extends AppCompatActivity {
             finish();
         }
         if (item.getItemId() == R.id.action_save) {
-            NoteData noteSave;
+            NoteDataStr noteSave;
             String idNote;
             if (intent.getStringExtra("id") != null) {
                 idNote = intent.getStringExtra("id");
@@ -167,12 +171,16 @@ public class CreateNote extends AppCompatActivity {
                 GenerateSalt generateId = new GenerateSalt();
                 idNote = generateId.randomGenerate();
             }
-            noteSave = new NoteData(idNote,
+            noteSave = new NoteDataStr(idNote,
                     titleEdit.getText().toString(),
                     bodyNote.getText().toString(),
                     String.valueOf(checkDeadline.isChecked()),
                     dateSetting.getText().toString(), lastChangeFile);
-            App.getNoteRepository().saveNote(noteSave);
+            try {
+                App.getNoteRepository().saveNote(noteSave);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Intent intent = new Intent(getApplicationContext(), NotesList.class);
             startActivity(intent);
             finish();

@@ -1,21 +1,19 @@
 package com.example.diplomapp;
 
-import java.util.Date;
-
-public class NoteData {
-    private String id;
+public class NoteDataStr {
     private String title;
     private String subtitle;
-    private Date deadline;
-    private boolean checkDeadline;
-    private Date lastChangeFile;
+    private String deadline;
+    private String id;
+    private String checkDeadline;
+    private String lastChangeFile;
 
-    public NoteData (String id,
+    public NoteDataStr (String id,
                      String title,
                      String subtitle,
-                     boolean checkDeadline,
-                     Date deadline,
-                     Date lastChangeFile) {
+                     String checkDeadline,
+                     String deadline,
+                     String lastChangeFile) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
@@ -36,15 +34,15 @@ public class NoteData {
         return subtitle;
     }
 
-    public boolean getCheckDeadline() {
+    public String getCheckDeadline() {
         return checkDeadline;
     }
 
-    public Date getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 
-    public Date getLastChangeFile() {
+    public String getLastChangeFile() {
         return lastChangeFile;
     }
 
@@ -63,4 +61,3 @@ public class NoteData {
                 '}';
     }
 }
-
