@@ -59,7 +59,7 @@ public class FileNoteRepository implements NoteRepository {
                 InputStreamReader streamReader = new InputStreamReader(fileInputStream);
                 Gson gson = new Gson();
                 NoteDataStr readNoteStr = gson.fromJson(streamReader, NoteDataStr.class);
-                if(Boolean.parseBoolean(readNoteStr.getCheckDeadline())) {
+                if (Boolean.parseBoolean(readNoteStr.getCheckDeadline())) {
                     dateNote = df.parse(readNoteStr.getDeadline());
                 } else {
                     dateNote = new Date();

@@ -1,6 +1,7 @@
 package com.example.diplomapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,18 +14,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class NotesList extends AppCompatActivity {
 
     private FloatingActionButton myFabAdd;
+    private static final int EDIT_REQUEST_CODE = 345;
+    private static final int ADD_REQUEST_CODE = 346;
+
     private static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm";
     private List<NoteData> notes = new ArrayList<>();
     private NoteDataAdapter noteDataAdapter;
@@ -60,21 +68,72 @@ public class NotesList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String idNote = notes.get(position).getId();
-              writeToIntent(new Intent(getApplicationContext(), CreateNote.class),
-                        App.getNoteRepository().getNoteById(idNote));
+                Intent intent = new Intent(getApplicationContext(), CreateNote.class);
+                writeToIntent(intent, App.getNoteRepository().getNoteById(idNote));
+                startActivityForResult(intent, EDIT_REQUEST_CODE);
             }
         });
     }
 
-    private void writeToIntent(Intent intent, NoteData note) {
+    static void writeToIntent(Intent intent, NoteData note) {
         DateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
         intent.putExtra("id", note.getId());
         intent.putExtra("title", note.getTitle());
         intent.putExtra("subtitle", note.getSubtitle());
         intent.putExtra("checkDeadline", note.getCheckDeadline());
         intent.putExtra("deadline", dateFormat.format(note.getDeadline()));
-        startActivity(intent);
-        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == EDIT_REQUEST_CODE &&
+                resultCode == RESULT_OK && data != null) {
+            for (NoteData id : notes) {
+                if (id.getId().equals(data.getStringExtra("id"))) {
+                    notes.set(notes.indexOf(id),
+                            readFromIntent(data));
+                }
+            }
+        }
+        if (requestCode == ADD_REQUEST_CODE &&
+                resultCode == RESULT_OK && data != null) {
+            notes.add(readFromIntent(data));
+        }
+        Comparator<NoteData> myDataComparator = new DataComparator();
+        notes.sort(myDataComparator);
+        noteDataAdapter.notifyDataSetChanged();
+        try {
+            App.getNoteRepository().getNotes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    static NoteData readFromIntent(Intent intent) {
+        DateFormat df = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
+        Date noteDate;
+        Date lastChange;
+        NoteData noteDataIntent = null;
+        try {
+            if (Boolean.parseBoolean(intent.getStringExtra("checkDeadline"))) {
+                noteDate = df.parse(intent.getStringExtra("deadline"));
+            } else {
+                noteDate = new Date();
+            }
+            lastChange = df.parse(intent.getStringExtra("lastChange"));
+            noteDataIntent = new NoteData(
+                    intent.getStringExtra("id"),
+                    intent.getStringExtra("title"),
+                    intent.getStringExtra("subtitle"),
+                    Boolean.parseBoolean(intent.getStringExtra("checkDeadline")),
+                    noteDate,
+                    lastChange
+            );
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return noteDataIntent;
     }
 
     private void clickLongItem() {
@@ -134,8 +193,7 @@ public class NotesList extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreateNote.class);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, ADD_REQUEST_CODE);
             }
         });
     }

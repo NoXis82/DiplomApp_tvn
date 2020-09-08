@@ -24,9 +24,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 public class CreateNote extends AppCompatActivity {
 
@@ -45,7 +43,6 @@ public class CreateNote extends AppCompatActivity {
     private Calendar todayCalendar;
     private String lastChangeFile;
     private Intent intent;
-    private DateFormat df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +69,7 @@ public class CreateNote extends AppCompatActivity {
     }
 
     private void setDateNow() {
-        df = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
+        DateFormat df = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
         lastChangeFile = df.format(Calendar.getInstance().getTime());
 
     }
@@ -158,12 +155,10 @@ public class CreateNote extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(getApplicationContext(), NotesList.class);
-            startActivity(intent);
             finish();
         }
         if (item.getItemId() == R.id.action_save) {
-            NoteDataStr noteSave;
+            NoteDataStr noteSaveStr;
             String idNote;
             if (intent.getStringExtra("id") != null) {
                 idNote = intent.getStringExtra("id");
@@ -171,21 +166,31 @@ public class CreateNote extends AppCompatActivity {
                 GenerateSalt generateId = new GenerateSalt();
                 idNote = generateId.randomGenerate();
             }
-            noteSave = new NoteDataStr(idNote,
+            noteSaveStr = new NoteDataStr(idNote,
                     titleEdit.getText().toString(),
                     bodyNote.getText().toString(),
                     String.valueOf(checkDeadline.isChecked()),
                     dateSetting.getText().toString(), lastChangeFile);
             try {
-                App.getNoteRepository().saveNote(noteSave);
+                App.getNoteRepository().saveNote(noteSaveStr);
+                Intent intent = new Intent();
+                writeToIntent(intent, idNote);
+                setResult(RESULT_OK, intent);
+                finish();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Intent intent = new Intent(getApplicationContext(), NotesList.class);
-            startActivity(intent);
-            finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void writeToIntent(Intent intent, String id) {
+        intent.putExtra("id", id);
+        intent.putExtra("title", titleEdit.getText().toString());
+        intent.putExtra("subtitle", bodyNote.getText().toString());
+        intent.putExtra("checkDeadline", String.valueOf(checkDeadline.isChecked()));
+        intent.putExtra("deadline", dateSetting.getText().toString());
+        intent.putExtra("lastChange", lastChangeFile);
     }
 
     @Override
